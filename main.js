@@ -26,29 +26,60 @@ async function writeDataOnPNG() {
         // Draw data points onto the canvas
         ctx.textAlign = "center";
         for (const rowData of dataPoints) {
-          let x = 800;
-          let y = 1425;
-
-          ctx.font = "bold 96px serif"; // size for the STUDENT NAME 
-          if (rowData["Student Name"].length > 16) {    // CONDITIONS if Name is  long
+          ctx.font = "bold 96px serif"; // size for the STUDENT NAME
+          if (rowData["Student Name"].length > 16) {
+            // CONDITIONS if Name is  long
             ctx.font = "bold 72px serif";
             if (rowData["Student Name"].length > 21) {
               ctx.font = "bold 69px serif";
             }
           }
 
-          ctx.fillStyle = "#FFFF00";  // Yellow 
+          ctx.fillStyle = "#FFFF00"; // Yellow
 
-          ctx.fillText(rowData["Student Name"], x, y);   /// write student name 
+          let x = 800;
+          let y = 1440;
+          ctx.fillText(rowData["Student Name"], x, y); /// write student name
 
-          ctx.fillStyle = "#111111";   // back to white
-          ctx.font = "bold 48px serif";
+          ctx.textAlign = "left";
 
-          // ctx.fillText(rowData['Father\'s Name'], x+100, y);
-          //   ctx.fillText(rowData['Mother\'s Name'], x, y);
-          //   ctx.fillText(rowData['Contact No.'], x, y);
+          ctx.font = "bold 56px serif"; // smaller text
+          if (rowData["Father's Name"].length > 16) {
+            // CONDITIONS if Name is  long
+            ctx.font = "bold 50px serif";
+            if (rowData["Father's Name"].length > 21) {
+              ctx.font = "bold 46px serif";
+            }
+          }
+
+          ctx.fillStyle = "#FFFFFF"; // back to white
+
+          ctx.fillText(rowData["Father's Name"], x - 180, y + 200); // write Father's Name
+
+          ctx.font = "bold 56px serif"; // smaller text
+          if (rowData["Mother's Name"].length > 16) {
+            // CONDITIONS if Name is  long
+            ctx.font = "bold 50px serif";
+            if (rowData["Mother's Name"].length > 21) {
+              ctx.font = "bold 40px serif";
+            }
+          }
+          ctx.fillText(rowData["Mother's Name"], x - 165, y + 316); // write Mother's Name
+
+
+          ctx.font = "bold 56px serif"; // smaller text
+          if (rowData.Address.length > 16) {
+            // CONDITIONS if Name is  long
+            ctx.font = "bold 50px serif";
+            if (rowData.Address.length > 21) {
+              ctx.font = "bold 40px serif";
+            }
+          }
+
+          ctx.fillText(rowData.Address, x - 300, y + 635);
+
           //   ctx.fillText(rowData['Date of Birth'], x, y);
-          //   ctx.fillText(rowData.Address, x, y);
+          // ctx.fillText(rowData['Contact No.'], x - 140, y + 400);
 
           break;
         }
