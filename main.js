@@ -4,6 +4,16 @@ const csv = require("csv-parser");
 
 const dataPoints = [];
 
+function addSpaceAroundSlash(str) {
+  if (str.includes('/')) {
+      // Add space before and after the slash
+      return str.replace('/', ' / ');
+  } else {
+      return str;
+  }
+}
+
+
 // Read data from CSV file
 async function writeDataOnPNG() {
   fs.createReadStream(csvFile)
@@ -19,13 +29,17 @@ async function writeDataOnPNG() {
 
       function processBatch() {
         if (startIndex < dataPoints.length) {
-          const canvas = createCanvas(imageDimensions.x, imageDimensions.y);
+          const dpi = 600; // DPI value
+          const canvas = createCanvas(imageDimensions.x, imageDimensions.y, { density: dpi,});
           const ctx = canvas.getContext("2d");
 
           loadImage(templateImage).then((image) => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-            const endIndex = Math.min(startIndex + batchSize, dataPoints.length);
+            const endIndex = Math.min(
+              startIndex + batchSize,
+              dataPoints.length
+            );
             const currentDataPoints = dataPoints.slice(startIndex, endIndex);
             drawDataPoints(currentDataPoints, ctx, coordinates, range);
 
@@ -63,14 +77,13 @@ function drawDataPoints(dataPoints, ctx, coordinates, range) {
 }
 
 async function writeOne(rowData, ctx, x, y) {
-  
   ctx.textAlign = "center";
-  ctx.font = "bold 96px serif"; // size for the STUDENT NAME
+  ctx.font = "bold 48px serif"; // size for the STUDENT NAME
   if (rowData["Student Name"].length > 16) {
     // CONDITIONS if Name is  long
-    ctx.font = "bold 72px serif";
+    ctx.font = "bold 36px serif";
     if (rowData["Student Name"].length > 21) {
-      ctx.font = "bold 69px serif";
+      ctx.font = "bold 34.5px serif";
     }
   }
 
@@ -80,64 +93,54 @@ async function writeOne(rowData, ctx, x, y) {
 
   ctx.textAlign = "left";
 
-  ctx.font = "bold 56px serif"; // smaller text
-  if (rowData["Father's Name"].length > 16) {
-    // CONDITIONS if Name is  long
-    ctx.font = "bold 50px serif";
-    if (rowData["Father's Name"].length > 21) {
-      ctx.font = "bold 46px serif";
-    }
-  }
+  ctx.font = "bold 28px serif"; // smaller text
 
   ctx.fillStyle = "#FFFFFF"; // back to white
 
-  ctx.fillText(rowData["Father's Name"], x - 180, y + 200); // write Father's Name
+  ctx.fillText(rowData["Father's Name"], x - 60, y + 100,350); // write Father's Name
 
-  ctx.font = "bold 56px serif"; // smaller text
-  if (rowData["Mother's Name"].length > 16) {
-    // CONDITIONS if Name is  long
-    ctx.font = "bold 50px serif";
-    if (rowData["Mother's Name"].length > 21) {
-      ctx.font = "bold 40px serif";
-    }
-  }
-  ctx.fillText(rowData["Mother's Name"], x - 120, y + 316); // write Mother's Name
+  ctx.font = "bold 28px serif"; // smaller text
+  ctx.fillText(rowData["Mother's Name"], x - 60, y + 158,350); // write Mother's Name
 
-  ctx.font = "bold 56px serif"; // smaller text
-  if (rowData.Address.length > 16) {
-    // CONDITIONS if Name is  long
-    if (rowData.Address.length > 21) {
-      ctx.font = "bold 40px serif";
-    }
-  }
-  ctx.fillText(rowData.Address, x - 120, y + 635, 600); // write address
+  ctx.font = "bold 28px serif"; // smaller text
+  ctx.fillText(rowData.Address, x - 60, y + 317.5, 350); // write address
 
-  ctx.font = "bold 56px arial";
+  ctx.font = "bold 28px arial";
 
-  ctx.fillText(rowData["Contact No."], x - 120, y + 420); // write contact number
+  const contactNo = rowData['Contact No.'];
+  const contactNoMain = addSpaceAroundSlash(contactNo);
+  ctx.fillText(contactNoMain, x - 60, y + 210); // write contact number
 
-  ctx.fillText(rowData["Date of Birth"], x - 120, y + 525);
+  ctx.fillText(rowData["Date of Birth"], x - 60, y + 262.5);
 }
 
-const templateImage = "./templates/fullTemplate.png";
-const imageDimensions = {
-  x: 7016,
-  y: 4960,
-};
-const outputPath = "./output/";
-const csvFile = "./data/class3CSV.csv";
-
 const coordinates = [
-  { x: 800, y: 1440 }, // 1st
-  { x: 2175, y: 1440 }, // 2nd
-  { x: 3530, y: 1440 }, // 3rd
-  { x: 4900, y: 1440 }, // 4th
-  { x: 6256, y: 1440 }, // 5th
-  { x: 800, y: 3800 },
-  { x: 2175, y: 3800 },
-  { x: 3530, y: 3800 },
-  { x: 4900, y: 3800 },
-  { x: 6256, y: 3800 },
+  { x: 400, y: 720 }, // 1st
+  { x: 1087.5, y: 720 }, // 2nd
+  { x: 1765, y: 720 }, // 3rd
+  { x: 2450, y: 720 }, // 4th
+  { x: 3128, y: 720 }, // 5th
+  { x: 400, y: 1900 },
+  { x: 1087.5, y: 1900 },
+  { x: 1765, y: 1900 },
+  { x: 2450, y: 1900 },
+  { x: 3128, y: 1900 },
 ];
 
-writeDataOnPNG();
+
+const imageDimensions = {     // image dimensions * same as template files
+  x: 3508,
+  y: 2480,
+};
+
+// 3508 x 2480
+
+const classNumber = 3    // chose class here  // START HERE
+
+const templateImage = `./templates/class${classNumber}FullTemplate.png`;     
+const outputPath = `./output/class${classNumber}/`; 
+const csvFile = `./data/class${classNumber}CSV.csv`;
+
+
+
+writeDataOnPNG();                             // main function
