@@ -153,6 +153,6 @@ const outputPath = `./output/class${classNumber}/`;
 const csvFile = `./data/class${classNumber}CSV.csv`;
 
 
-makeFolder(outputPath); // creates a class dedicated folder
+await makeFolder(outputPath); // creates a class dedicated folder
 
 writeDataOnPNG(); // main function
