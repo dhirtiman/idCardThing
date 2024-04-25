@@ -145,14 +145,14 @@ async function makeFolder(outputPath) {
 }
 
 // 3508 x 2480
-
-const classNumber = 9                               // chose class here  // START HERE
+const args = +process.argv.slice(2)
+const classNumber = args || 10                               // chose class here  // START HERE
 
 const templateImage = `./templates/class${classNumber}FullTemplate.png`;
 const outputPath = `./output/class${classNumber}/`;
 const csvFile = `./data/class${classNumber}CSV.csv`;
 
 
-await makeFolder(outputPath); // creates a class dedicated folder
+ makeFolder(outputPath); // creates a class dedicated folder
 
 writeDataOnPNG(); // main function

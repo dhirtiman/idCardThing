@@ -32,26 +32,33 @@ IDCARDTHING/
 ### Usage
 
 1. Place your student data in CSV format in the `data/` directory.
-2. Customize the ID card template  `templates/` directory.
+2. Customize the ID card template `templates/` directory.
 3. Run the `main.js` script to generate ID cards.
 4. The generated ID cards will be saved in the `output/class{classNumber}` directories.
 
 ### note: Students csvFile structure
 
-``` 
+```
 slno,Student Name,Father's Name,Mother's Name,Class,Contact No.,Date of Birth,Address
 ```
 
 ### How to Run
 
 ```bash
+node main.js [classNumber]
+```
+or
+
+```js
 node main.js
 ```
 
+after specifying classNumber in main.js line 149
+
 ### Contributing
 
-Contributions are not welcome 
+Contributions are not welcome
 
 ### License
 
-DO WHATEVER THE F** YOU WANT WITH THIS PROJECT
+DO WHATEVER THE F\*\* YOU WANT WITH THIS PROJECT
