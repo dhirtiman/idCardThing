@@ -5,14 +5,13 @@ const csv = require("csv-parser");
 const dataPoints = [];
 
 function addSpaceAroundSlash(str) {
-  if (str.includes('/')) {
-      // Add space before and after the slash
-      return str.replace('/', ' / ');
+  if (str.includes("/")) {
+    // Add space before and after the slash
+    return str.replace("/", " / ");
   } else {
-      return str;
+    return str;
   }
 }
-
 
 // Read data from CSV file
 async function writeDataOnPNG() {
@@ -30,7 +29,9 @@ async function writeDataOnPNG() {
       function processBatch() {
         if (startIndex < dataPoints.length) {
           const dpi = 600; // DPI value
-          const canvas = createCanvas(imageDimensions.x, imageDimensions.y, { density: dpi,});
+          const canvas = createCanvas(imageDimensions.x, imageDimensions.y, {
+            density: dpi,
+          });
           const ctx = canvas.getContext("2d");
 
           loadImage(templateImage).then((image) => {
@@ -97,17 +98,17 @@ async function writeOne(rowData, ctx, x, y) {
 
   ctx.fillStyle = "#FFFFFF"; // back to white
 
-  ctx.fillText(rowData["Father's Name"], x - 60, y + 100,350); // write Father's Name
+  ctx.fillText(rowData["Father's Name"], x - 60, y + 100, 350); // write Father's Name
 
   ctx.font = "bold 28px serif"; // smaller text
-  ctx.fillText(rowData["Mother's Name"], x - 60, y + 158,350); // write Mother's Name
+  ctx.fillText(rowData["Mother's Name"], x - 60, y + 158, 350); // write Mother's Name
 
   ctx.font = "bold 28px serif"; // smaller text
   ctx.fillText(rowData.Address, x - 60, y + 317.5, 350); // write address
 
   ctx.font = "bold 28px arial";
 
-  const contactNo = rowData['Contact No.'];
+  const contactNo = rowData["Contact No."];
   const contactNoMain = addSpaceAroundSlash(contactNo);
   ctx.fillText(contactNoMain, x - 60, y + 210); // write contact number
 
@@ -127,20 +128,31 @@ const coordinates = [
   { x: 3128, y: 1900 },
 ];
 
-
-const imageDimensions = {     // image dimensions * same as template files
+const imageDimensions = {
+  // image dimensions * same as template files
   x: 3508,
   y: 2480,
 };
 
+async function makeFolder(outputPath) {
+  fs.mkdir(outputPath, { recursive: true }, (err) => {
+    if (err) {
+      console.error("Error creating folder:", err);
+    } else {
+      console.log("Folder created successfully.");
+    }
+  });
+}
+
 // 3508 x 2480
 
-const classNumber = 3    // chose class here  // START HERE
+const classNumber = 9                               // chose class here  // START HERE
 
-const templateImage = `./templates/class${classNumber}FullTemplate.png`;     
-const outputPath = `./output/class${classNumber}/`; 
+const templateImage = `./templates/class${classNumber}FullTemplate.png`;
+const outputPath = `./output/class${classNumber}/`;
 const csvFile = `./data/class${classNumber}CSV.csv`;
 
 
+makeFolder(outputPath); // creates a class dedicated folder
 
-writeDataOnPNG();                             // main function
+writeDataOnPNG(); // main function
