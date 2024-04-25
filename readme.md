@@ -45,7 +45,7 @@ slno,Student Name,Father's Name,Mother's Name,Class,Contact No.,Date of Birth,Ad
 ### How to Run
 
 ```bash
-node generateIDCards.js
+node main.js
 ```
 
 ### Contributing
