@@ -5,7 +5,7 @@ This is a id card generator which automates id card using a csv file and templat
 ### Dependencies used
 
 - [canvas](https://www.npmjs.com/package/canvas): to create a canvas over the template image
-- [csv-parser](https://www.npmjs.com/package/csv-parser): A
+- [csv-parser](https://www.npmjs.com/package/csv-parser): it allow me to read the csv files
 
 ### File Structure
 
