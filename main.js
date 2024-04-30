@@ -90,11 +90,29 @@ async function writeOne(rowData, ctx, x, y) {
 
   ctx.fillStyle = "#FFFF00"; // Yellow
 
-  ctx.fillText(rowData["Student Name"], x, y); /// write student name
+  ctx.fillText(rowData["Student Name"], x, y,590); /// write student name
 
-  ctx.textAlign = "left";
 
+  ctx.font = "bold 48px serif";
+
+  if (rowData['Class'].length > 6) {   // IF CLASS IS LONG ASS HELLL NURSEREY
+    ctx.fillText('CLASS : '+rowData['Class'],x+10,y+58) // write class   
+    // ctx.fillText('.',x+10,y+58) // write class   
+
+  }else{
+    ctx.textAlign = "left";
+    ctx.fillText('CLASS : ',x-138,y+58) // write class 
+    
+    ctx.fillText(rowData['Class'],x+60,y+58,230) // write class 
+  
+  }
+
+
+
+
+  
   ctx.font = "bold 28px serif"; // smaller text
+  ctx.textAlign = "left";
 
   ctx.fillStyle = "#FFFFFF"; // back to white
 
@@ -116,16 +134,16 @@ async function writeOne(rowData, ctx, x, y) {
 }
 
 const coordinates = [
-  { x: 400, y: 720 }, // 1st
-  { x: 1087.5, y: 720 }, // 2nd
-  { x: 1765, y: 720 }, // 3rd
-  { x: 2450, y: 720 }, // 4th
-  { x: 3128, y: 720 }, // 5th
-  { x: 400, y: 1900 },
-  { x: 1087.5, y: 1900 },
-  { x: 1765, y: 1900 },
-  { x: 2450, y: 1900 },
-  { x: 3128, y: 1900 },
+  { x: 400, y: 721 }, // 1st
+  { x: 1087.5, y: 721 }, // 2nd
+  { x: 1765, y: 721 }, // 3rd
+  { x: 2450, y: 721 }, // 4th
+  { x: 3143, y: 721 }, // 5th
+  { x: 400, y: 1908 },
+  { x: 1087.5, y: 1908 },
+  { x: 1765, y: 1908 },
+  { x: 2450, y: 1908 },
+  { x: 3143, y: 1908 },
 ];
 
 const imageDimensions = {
@@ -146,11 +164,14 @@ async function makeFolder(outputPath) {
 
 // 3508 x 2480
 const args = +process.argv.slice(2)
-const classNumber = args || 10                               // chose class here  // START HERE
+const classNumber = args || 7                              // chose class here  // START HERE
 
-const templateImage = `./templates/class${classNumber}FullTemplate.png`;
-const outputPath = `./output/class${classNumber}/`;
-const csvFile = `./data/class${classNumber}CSV.csv`;
+// const templateImage = `./templates/class${classNumber}FullTemplate.png`;
+const templateImage = `./templates/fullTemplate.png`;
+
+const outputPath = `./output/class${'mix'}/`;
+// const csvFile = `./data/class${classNumber}CSV.csv`;
+const csvFile = `./data/classMIXCSV.csv`;
 
 
  makeFolder(outputPath); // creates a class dedicated folder
